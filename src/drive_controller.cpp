@@ -5,7 +5,7 @@ DriveController::DriveController(double dt){
   input_v = 0;
   input_w = 0;
 
-  output_pub = node.advertise<illini_racecar::AckermannCmd>("/ackerman_target", 10);
+  output_pub = node.advertise<illini_racecar::AckermannCmd>("/ackermann_cmd", 10);
   cmd_vel_sub = node.subscribe("/cmd_vel", 100, &DriveController::sub_callback, this);
   timer = node.createTimer(ros::Duration(dt), &DriveController::timer_callback, this);
 }
@@ -23,7 +23,7 @@ void DriveController::sub_callback(const geometry_msgs::Twist &msg){
   input_w = msg.angular.z;
 }
 
-int DriveController::convert_to_pwm(double value, double min_val, double max_val){
+uint16_t DriveController::convert_to_pwm(double value, double min_val, double max_val){
   double perc = value/(max_val - min_val);
-  return (int)(perc*(pwm_max-pwm_min) + pwm_neutral);
+  return (uint16_t)(perc*(pwm_max-pwm_neutral) + pwm_neutral);
 }

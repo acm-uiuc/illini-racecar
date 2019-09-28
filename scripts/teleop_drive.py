@@ -12,13 +12,13 @@ LEFT_Y_IDX = 1
 RIGHT_X_IDX = 3
 
 # joystick input [-1, 1] -> meters/sec
-SCALE_FACTOR = 0.25
+SCALE_FACTOR = 0.01
 
 def callback(data):
     twist = Twist()
 
     twist.linear.x = data.axes[LEFT_Y_IDX] * SCALE_FACTOR
-    twist.angular.z = data.axes[RIGHT_X_IDX] * SCALE_FACTOR
+    twist.angular.z = data.axes[RIGHT_X_IDX] * SCALE_FACTOR * -1;
     pub.publish(twist)
 
 def main():
