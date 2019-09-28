@@ -12,12 +12,18 @@ DriveController::DriveController(double dt){
 
 void DriveController::timer_callback(const ros::TimerEvent &timer_event){
   illini_racecar::AckermannCmd output;
-  output.throttle = 0;
-  output.steering_angle = 0;
+  double steering_angle = input_v == 0 ? 0 : atan(input_w * wheelbase / input_v);
+  output.throttle = convert_to_pwm(input_v, speed_min, speed_max);
+  output.steering_angle = convert_to_pwm(steering_angle, angle_min, angle_max);
   output_pub.publish(output);
 }
 
 void DriveController::sub_callback(const geometry_msgs::Twist &msg){
   input_v = msg.linear.x;
   input_w = msg.angular.z;
+}
+
+int DriveController::convert_to_pwm(double value, double min_val, double max_val){
+  double perc = value/(max_val - min_val);
+  return (int)(perc*(pwm_max-pwm_min) + pwm_neutral);
 }
