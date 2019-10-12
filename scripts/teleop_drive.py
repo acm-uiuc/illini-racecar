@@ -12,7 +12,7 @@ LEFT_Y_IDX = 1
 RIGHT_X_IDX = 3
 
 # joystick input [-1, 1] -> meters/sec
-SCALE_FACTOR = 0.01
+SCALE_FACTOR = 13.0
 
 def callback(data):
     twist = Twist()
