@@ -11,7 +11,7 @@ class DriveController{
     double input_v, input_w;
     const double wheelbase = 0.3302; //m
     const int pwm_max = 180, pwm_min = 0, pwm_neutral = 90;
-    const double speed_max = 3;
+    const double speed_max = 2;
     const double theoretical_speed_max = 13;
     const double angle_max = 1.6;
 
